@@ -16,8 +16,8 @@ class UserProfileInfo( models.Model ):
         return self.user.username
 
 def validate_ParkingSpace_vehicle_type(value):
-    if not (vehicleType == 'Car' or vehicleType == 'Motorbike'):
-        raise forms.ValidationError("Vehicle Type not allowed")
+    if not (value == 'Car' or value == 'Motorbike'):
+        raise value.ValidationError("Vehicle Type not allowed")
 
 class ParkingSpace( models.Model ):
     

@@ -34,4 +34,4 @@ class UserProfileInfoForm(forms.ModelForm):
 
     class Meta():
         model = UserProfileInfo
-        fields = ('profile_pic')
+        fields = ('profile_pic',)

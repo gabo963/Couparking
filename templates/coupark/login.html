@@ -5,21 +5,30 @@
   <div class="container">
     <div class="jumbotron">
       <div class="container">
-        <h1>Please log in</h1>
-        <h3>If you dont have an account you can create one <a href="{% url 'coupark:register' %}">here</a></h4>
+        <h2>Log in</h2>
+        <h4>If you dont have an account you can create one <a href="{% url 'coupark:register' %}">here</a></h4>
+        
+        <div class="row mb-3"></div>
+
+        <div class="container">
+          <form action="{% url 'coupark:user_login' %}" method="POST" >
   
-        <form action="{% url 'coupark:user_login' %}" method="POST" >
-  
-          {% csrf_token %}
-          <label for="username">Username:</label>
-          <input type="text" name="username" placeholder="Enter you username">
-  
-          <label for="password">Password:</label>
-          <input type="password" name="password">
-  
-          <input class="btn btn-primary" type="submit" value="Login">
-  
-        </form>
+            {% csrf_token %}
+            <div>
+              <label for="username">Username:</label>
+              <input type="text" name="username" placeholder="Enter you username">
+            </div>
+            <div class="row mb-2"></div>
+            <div>
+              <label for="password">Password:</label>
+              <input type="password" name="password">
+            </div>
+    
+            <input class="btn btn-primary" type="submit" value="Login">
+    
+          </form>
+          <div class="row mb-5"></div>
+        </div>
       </div>
     </div>
   </div>

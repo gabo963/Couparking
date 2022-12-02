@@ -3,6 +3,8 @@
 *.pot
 *.pyc
 __pycache__
+coupark/__pycache__
+couparking/__pycache__
 db.sqlite3
 media
 

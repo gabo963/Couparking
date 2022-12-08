@@ -46,6 +46,8 @@ def register( request ):
 
             registered = True
 
+            return HttpResponseRedirect(reverse('index'))
+
         else:
             print(user_form.errors, profile_form.errors)
     else:

@@ -26,7 +26,6 @@ class ParkingSpace( models.Model ):
     active = models.BooleanField( default = True )
     vehicleType = models.CharField(max_length=15, validators=[validate_ParkingSpace_vehicle_type])
 
-    
     def __str__(self):
         return self.name
 

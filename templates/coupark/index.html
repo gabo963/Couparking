@@ -13,7 +13,7 @@
 
 <div style="margin-top:40px"></div>
 
-{% if access_records %}
+{% if spaces %}
 
 <div class="container">
   <div class="accordion" id="accordionPanelsStayOpenExample">
@@ -32,7 +32,7 @@
                   {% if space.parkingSpace.vehicleType == 'Car' %}
                     <div class="col">
                       <div class="card shadow-sm">
-                        {% if not space.user %}
+                        {% if space.user != None %}
                           <svg class="bd-placeholder-img card-img-top" fill="#ffc107" width="100%" height="150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Reserved Spot" preserveAspectRatio="xMidYMid slice" focusable="false">
                             <title>{{space.parkingSpace.name}}</title>
                             <rect width="100%" height="100%" class="bg-warning"></rect>
@@ -48,7 +48,7 @@
                           </svg>
                         {% endif %}
                         <div class="card-body">
-                          {% if space.user %}
+                          {% if space.user != None %}
                             <p class="card-text">Reserved by: {{space.user.get_full_name}}</p>
                             <p class="card-text">{{space.parkingSpace.name}} {{space.parkingSpace.description}}</p>
                           {% else %}
@@ -57,11 +57,11 @@
                           <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                               {% comment %} Add Connections to view {% endcomment %}
-                              {% if not hasReservation and not space.user %}
-                                <a class="btn btn-outline-success" href="#">Book</button>
+                              {% if not hasReservation and space.user == None %}
+                                <a class="btn btn-outline-success" href="#">Book</a>
                               {% elif hasReservation and user.id == space.user.id %}
-                                <a class="btn btn-outline-warning" href="#">Unbook</button>
-                              {% elif space.user %}
+                                <a class="btn btn-outline-warning" href="#">Unbook</a>
+                              {% elif space.user != None %}
                                 <a class="btn btn-warning disabled" href="#">Booked</a>
                               {% else %}
                                 <a class="btn btn-info disabled" href="#">Available</a>

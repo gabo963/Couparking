@@ -17,6 +17,8 @@ def index( request ):
     availableSpaces = ParkingReservation.objects.filter( date = lastDate )
     currentUserReservation = True if ParkingReservation.objects.filter( date = lastDate, user = request.user ) else False
 
+    print(currentUserReservation)
+
     return render( request, 'coupark/index.html', {'spaces': availableSpaces, 'dateBooking': lastDate, 'hasReservation': currentUserReservation} )
 
 @login_required

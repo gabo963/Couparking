@@ -26,8 +26,8 @@ def user_logout(request):
 
 @login_required
 def reservations(request):
-    #TODO: Build reservations view
-    return HttpResponse('Coming soon')
+    currentUserReservations = ParkingReservation.objects.filter( user = request.user )
+    return render( request, 'coupark/reservations.html', { 'currentUserReservations': currentUserReservations } )
 
 @login_required
 def reserve(request, pk):

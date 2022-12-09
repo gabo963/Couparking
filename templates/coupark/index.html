@@ -2,30 +2,79 @@
 {% block body_block %}
 
 <div class="jumbotron">
-  <h1>Couparking</h1>
-  <h2>Date: </h2>
-  <h3>Free parking spots are marked in green, booked parking spots are marked in orange.</h3>
+  <div class="container" >
+    <h1>Hi, {{user.get_full_name}} Welcome to Couparking</h1>
+    <h2>You are booking for: {{dateBooking}}</h2> 
+    <h3>
+      Free parking spots are marked in <span style="color:#198754">green</span>, booked parking spots are marked in <span style="color:#ffc107">orange</span>.
+    </h3>
+  </div>
 </div>
 
-<div class="album py-5 bg-light">
+<div style="margin-top:40px"></div>
 
-  <h2>Cars:</h2>
+{% if access_records %}
 
-  <div class="container">
-
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      {# This is an icon #}
-      <div class="col">
-        <div class="card shadow-sm">
-          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-          <div class="card-body">
-            <p class="card-text">Parking spot X Big parking behind x spot.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">Reserve</button>
+<div class="container">
+  <div class="accordion" id="accordionPanelsStayOpenExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+          <h2>Cars</h2>
+        </button>
+      </h2>
+      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+        <div class="accordion-body">
+          <div class="album py-5 bg-light">
+            <div class="container">
+              <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for space in spaces %}
+                  {% if space.parkingSpace.vehicleType == 'Car' %}
+                    <div class="col">
+                      <div class="card shadow-sm">
+                        {% if not space.user %}
+                          <svg class="bd-placeholder-img card-img-top" fill="#ffc107" width="100%" height="150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Reserved Spot" preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <title>{{space.parkingSpace.name}}</title>
+                            <rect width="100%" height="100%" class="bg-warning"></rect>
+                            <text class="justify-content-center" x="40%" y="50%" fill="#eceeef" dy=".3em">Reserved</text>
+                            <text class="justify-content-center" x="40%" y="30%" fill="#eceeef" dy=".3em">{{space.parkingSpace.name}}</text>
+                          </svg>
+                        {% else %}
+                          <svg class="bd-placeholder-img card-img-top" fill="#198754" width="100%" height="150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Reserved Spot" preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <title>{{space.parkingSpace.name}}</title>
+                            <rect width="100%" height="100%" class="bg-success"></rect>
+                            <text class="justify-content-center" x="40%" y="50%" fill="#eceeef" dy=".3em">Available</text>
+                            <text class="justify-content-center" x="40%" y="30%" fill="#eceeef" dy=".3em">{{space.parkingSpace.name}}</text>
+                          </svg>
+                        {% endif %}
+                        <div class="card-body">
+                          {% if space.user %}
+                            <p class="card-text">Reserved by: {{space.user.get_full_name}}</p>
+                            <p class="card-text">{{space.parkingSpace.name}} {{space.parkingSpace.description}}</p>
+                          {% else %}
+                            <p class="card-text">{{space.parkingSpace.name}} {{space.parkingSpace.description}}</p>
+                          {% endif %}
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                              {% comment %} Add Connections to view {% endcomment %}
+                              {% if not hasReservation and not space.user %}
+                                <a class="btn btn-outline-success" href="#">Book</button>
+                              {% elif hasReservation and user.id == space.user.id %}
+                                <a class="btn btn-outline-warning" href="#">Unbook</button>
+                              {% elif space.user %}
+                                <a class="btn btn-warning disabled" href="#">Booked</a>
+                              {% else %}
+                                <a class="btn btn-info disabled" href="#">Available</a>
+                              {% endif %}
+                            </div>
+                            <small class="text-muted">CouParking</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endfor %}
               </div>
-              <small class="text-muted">CouParking</small>
             </div>
           </div>
         </div>
@@ -34,32 +83,8 @@
   </div>
 </div>
 
-<div class="album py-5 bg-light">
+{% endif %}
 
-  <h2>Motorcycles:</h2>
-
-  <div class="container">
-
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      {# This is an icon #}
-      <div class="col">
-        <div class="card shadow-sm">
-          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-          <div class="card-body">
-            <p class="card-text">Parking spot X Big parking behind x spot.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">Reserve</button>
-              </div>
-              <small class="text-muted">CouParking</small>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
+<div style="margin-top:40px"></div>
 
 {% endblock %}

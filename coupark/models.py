@@ -27,7 +27,7 @@ class ParkingSpace( models.Model ):
     vehicleType = models.CharField(max_length=15, validators=[validate_ParkingSpace_vehicle_type])
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 class Date( models.Model ):
     date = models.DateField()
@@ -38,10 +38,10 @@ class Date( models.Model ):
 class ParkingReservation( models.Model ):
 
     parkingSpace = models.ForeignKey(ParkingSpace, on_delete=models.CASCADE)
-    user = models.ForeignKey( User, on_delete=models.CASCADE )
+    user = models.ForeignKey( User, on_delete=models.CASCADE, blank=True, null=True )
     date = models.ForeignKey( Date, on_delete=models.CASCADE )
 
     def __str__(self):
-        return self.user.__str__ + ' ' +  self.parkingSpace.__str__ + ' ' + self.date.__str__
+        return  self.parkingSpace.name + ' ' + str(self.date.date)
 
 

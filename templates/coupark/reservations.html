@@ -4,11 +4,40 @@
 <div class="jumbotron">
   <div class="container" >
     <h1>Hi, {{user.get_full_name}} this are your previous reservations.</h1>
+    <h2>Currently you can book spots for the: {{dateBooking}}</h2>
   </div>
 </div>
 
 <div style="margin-top:40px"></div>
 
+{% if currentUserReservations %}
+
+<div class="container">
+  <div class="list-group">
+    {% for reservation in currentUserReservations %}
+
+      <a href="" class="list-group-item list-group-item-action disabled" aria-current="true"> 
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{reservation.parkingSpace.name}}</h5>
+          <small>{{dateBooking}}</small>
+        </div>
+        <p class="mb-1">{{reservation.parkingSpace.description}}</p>
+        <small>Booked by Couparking</small>
+      </a>
+
+    {% endfor %}
+    
+  </div>
+</div>
+
+{% else %}
+
+  <div class="container">
+    <h4>You have no existing reservations.</h4>
+    <a class="nav-link" href="{% url 'index' %}">Go back</a>
+  </div>
+
+{% endif %}
 <div style="margin-top:40px"></div>
 
 {% endblock %}

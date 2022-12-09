@@ -56,11 +56,10 @@
                           {% endif %}
                           <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                              {% comment %} Add Connections to view {% endcomment %}
                               {% if not hasReservation and space.user == None %}
-                                <a class="btn btn-outline-success" href={{space.id}}>Book</a>
+                                <a class="btn btn-outline-success" href="book/{{space.id}}">Book</a>
                               {% elif hasReservation and user.id == space.user.id %}
-                                <a class="btn btn-outline-warning" href={{space.id}}>Unbook</a>
+                                <a class="btn btn-outline-warning" href="book/{{space.id}}">Unbook</a>
                               {% elif space.user != None %}
                                 <a class="btn btn-warning disabled" href="#">Booked</a>
                               {% else %}

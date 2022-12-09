@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def index( request ):
-    return render( request, 'coupark/index.html' )
+    return render( request, 'coupark/index.html', {'registered': registered, 'user_form': user_form, 'profile_form': profile_form} )
 
 @login_required
 def user_logout(request):
@@ -20,6 +20,7 @@ def user_logout(request):
 
 @login_required
 def reservations(request):
+    #TODO: Build reservations view
     return HttpResponse('good job, youre logged in')
 
 def register( request ):
@@ -46,7 +47,23 @@ def register( request ):
 
             registered = True
 
-            return HttpResponseRedirect(reverse('index'))
+            # Login registered users.
+
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate( username=username, password=password )
+
+            if user:
+                if user.is_active:
+                    login(request,user)
+                    return HttpResponseRedirect(reverse('index'))
+                else:
+                    return HttpResponse('Account not active')
+            else:
+                print('Someone tried to log in and failed')
+                print( f'Username {username} and Password {password}' )
+                return HttpResponse( 'Invalid login details supplied!' )
 
         else:
             print(user_form.errors, profile_form.errors)

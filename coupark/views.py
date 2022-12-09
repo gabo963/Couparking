@@ -29,7 +29,6 @@ def reservations(request):
     lastDate = Date.objects.last()
     currentUserReservations = ParkingReservation.objects.filter( user = request.user )
 
-    print(currentUserReservations)
     return render( request, 'coupark/reservations.html', { 'currentUserReservations': currentUserReservations, 'dateBooking': lastDate} )
 
 @login_required

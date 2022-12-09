@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from coupark.forms import UserProfileInfoForm, UserForm
+from coupark.models import ParkingSpace, ParkingReservation, Date
 
 # For login:
 from django.contrib.auth import authenticate, login, logout
@@ -11,7 +12,11 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def index( request ):
-    return render( request, 'coupark/index.html', {'registered': registered, 'user_form': user_form, 'profile_form': profile_form} )
+
+    lastDate = Date.objects.last()
+    availableSpaces = ParkingReservation.objects.filter( date = lastDate )
+
+    return render( request, 'coupark/index.html', {'spaces': availableSpaces, 'dateBooking': lastDate} )
 
 @login_required
 def user_logout(request):

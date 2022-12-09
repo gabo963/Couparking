@@ -31,6 +31,23 @@ def reservations(request):
     #TODO: Build reservations view
     return HttpResponse('good job, youre logged in')
 
+@login_required
+def reserve(request, pk):
+    #Handles reservation 
+    
+    lastDate = Date.objects.last()
+    availableSpaces = ParkingReservation.objects.filter( date = lastDate )
+    currentUserReservation = ParkingReservation.objects.filter( date = lastDate, user = request.user )
+
+    if len(currentUserReservation) > 0 and currentUserReservation.get(id = pk) != None:
+        ParkingReservation.objects.update_or_create(id = pk, defaults={'user':None})
+        return HttpResponseRedirect(reverse('index'))
+
+    if availableSpaces.filter( id = pk ) != None and len(currentUserReservation) == 0:
+        ParkingReservation.objects.update_or_create(id = pk, defaults={'user':request.user})
+        return HttpResponseRedirect(reverse('index'))
+    
+
 def register( request ):
 
     registered = False

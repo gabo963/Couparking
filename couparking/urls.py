@@ -23,4 +23,5 @@ urlpatterns = [
     path('coupark/', include('coupark.urls')),
     path('logout/', views.user_logout, name='logout'),
     path('reservations/', views.reservations, name='reservations'),
+    path('<pk>', views.reserve, name='reserve')
 ]

@@ -10,12 +10,27 @@ from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
 from django_apscheduler import util
 
+#App imports
+
+from coupark.models import ParkingSpace, ParkingReservation, Date
+from datetime import datetime, timedelta
+
 logger = logging.getLogger(__name__)
 
 
-def my_job():
-  # Your job processing logic here...
-  pass
+def NewDay():
+    #Gets list of parking spaces.
+    parkingLots = ParkingSpace.objects.all()
+    nextDate = datetime.today() + timedelta(days=1)
+
+    Date.objects.update_or_create( date = nextDate, defaults={'date':nextDate} )
+
+    dbDate = Date.objects.get(date = nextDate)
+
+    for parkingLot in parkingLots:
+        if parkingLot.active:
+            # Update or create new item to Parking reservation
+            ParkingReservation.objects.update_or_create( date = dbDate, parkingSpace = parkingLot, defaults={'user':None, 'date':dbDate, 'parkingSpace':parkingLot})
 
 
 # The `close_old_connections` decorator ensures that database connections, that have become
@@ -42,19 +57,19 @@ class Command(BaseCommand):
     scheduler.add_jobstore(DjangoJobStore(), "default")
 
     scheduler.add_job(
-      my_job,
+      NewDay,
       trigger=CronTrigger(second="*/10"),  # Every 10 seconds
-      id="my_job",  # The `id` assigned to each job MUST be unique
+      id="NewDay",  # The `id` assigned to each job MUST be unique
       max_instances=1,
       replace_existing=True,
     )
-    logger.info("Added job 'my_job'.")
+    logger.info("Added job 'NewDay'.")
 
     scheduler.add_job(
       delete_old_job_executions,
       trigger=CronTrigger(
-        day_of_week="mon", hour="00", minute="00"
-      ),  # Midnight on Monday, before start of the next work week.
+        day_of_week="sun", hour="00", minute="00"
+      ),  # Midnight on Sunday, before start of the next work week.
       id="delete_old_job_executions",
       max_instances=1,
       replace_existing=True,

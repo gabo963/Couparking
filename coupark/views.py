@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from coupark.forms import UserProfileInfoForm, UserForm
+from coupark.forms import UserForm
 from coupark.models import ParkingSpace, ParkingReservation, Date
 
 # For login:
@@ -82,10 +82,9 @@ def register( request ):
                 return HttpResponse( 'Invalid login details supplied!' )
 
         else:
-            print(user_form.errors, profile_form.errors)
+            print(user_form.errors)
     else:
         user_form = UserForm()
-        profile_form = UserProfileInfoForm()
 
     return render( request, 'coupark/registration.html', {'registered': registered, 'user_form': user_form,} )
 

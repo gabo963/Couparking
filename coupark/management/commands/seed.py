@@ -3,6 +3,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 from coupark.models import ParkingSpace, ParkingReservation, Date
+from datetime import datetime, timedelta
 
 # python manage.py seed --mode=refresh
 
@@ -23,27 +24,46 @@ class Command(BaseCommand):
 
 def clear_data():
     """Deletes all the table data"""
-    logger.info("Delete Address instances")
+    logger.info("Delete ParkingReservations, ParkingSpaces, and Dates instances")
     ParkingReservation.objects.all().delete()
     ParkingSpace.objects.all().delete()
     Date.objects.all().delete()
 
 
+spots = [ 
+{'name': "Spot: 15", 'description': "Big Spot - S3", 'active': True, 'vehicle': "Car"},
+{'name': "Spot: 16", 'description': "Big Spot - S3 (Behind 15)", 'active': True, 'vehicle': "Car"},
+{'name': "Spot: 43", 'description': "S3", 'active': True, 'vehicle': "Car"},
+{'name': "Spot: 44", 'description': "S3 (Behind 43)", 'active': True, 'vehicle': "Car"},
+{'name': "Spot: 46", 'description': "S3", 'active': True, 'vehicle': "Car"},
+{'name': "Spot: 47", 'description': "S3 (Behind 46)", 'active': True, 'vehicle': "Car"},
+{'name': "Spot: 49", 'description': "S3", 'active': True, 'vehicle': "Car"},
+{'name': "Spot: 50", 'description': "S3 (Behind 49)", 'active': True, 'vehicle': "Car"},
+{'name': "Spot: 52-1", 'description': "S3", 'active': True, 'vehicle': "Motorbike"},
+{'name': "Spot: 52-2", 'description': "S3", 'active': True, 'vehicle': "Motorbike"},
+{'name': "Spot: 52-3", 'description': "S3", 'active': True, 'vehicle': "Motorbike"},
+{'name': "Spot: 52-4", 'description': "S3", 'active': True, 'vehicle': "Motorbike"},
+{'name': "Spot: 53-1", 'description': "S3", 'active': True, 'vehicle': "Motorbike"},
+{'name': "Spot: 53-2", 'description': "S3", 'active': True, 'vehicle': "Motorbike"},
+{'name': "Spot: 53-3", 'description': "S3", 'active': True, 'vehicle': "Motorbike"},
+{'name': "Spot: 53-4", 'description': "S3", 'active': True, 'vehicle': "Motorbike"}
+]
+
 def add_spots():
     """Adds parking spots"""
     logger.info("Adding Parking Spots")
-    street_flats = ["#221 B", "#101 A", "#550I", "#420G", "#A13"]
-    street_localities = ["Bakers Street", "Rajori Gardens", "Park Street", "MG Road", "Indiranagar"]
-    pincodes = ["101234", "101232", "101231", "101236", "101239"]
+    
+    for spot in spots:
+        
+        parkingSpot = ParkingSpace(
+            name = spot.name,
+            description = spot.description,
+            active = spot.active,
+            vehicleType = spot.vehicle
+        )
 
-    address = Address(
-        street_flat=random.choice(street_flats),
-        street_locality=random.choice(street_localities),
-        pincode=random.choice(pincodes),
-    )
-    address.save()
-    logger.info("{} address created.".format(address))
-    return address
+    spot.save()
+    logger.info("Spot created")
 
 def run_seed(self, mode):
     """ Seed database based on mode
@@ -54,6 +74,19 @@ def run_seed(self, mode):
     # Clear data from tables
     clear_data()
 
-    # Creating 15 addresses
-    for i in range(15):
-        create_address()
+    # Adds parkingSpaces
+    add_spots()
+
+    #Adds date
+    nextDate = datetime.today() + timedelta(days=1)
+    Date.objects.update_or_create( date = nextDate, defaults={'date':nextDate} )
+    dbDate = Date.objects.get(date = nextDate)
+
+    #Adds parking reservations
+    parkingLots = ParkingSpace.objects.all()
+    for parkingLot in parkingLots:
+          if parkingLot.active:
+              # Update or create new item to Parking reservation
+              ParkingReservation.objects.update_or_create( date = dbDate, parkingSpace = parkingLot, defaults={'user':None, 'date':dbDate, 'parkingSpace':parkingLot})
+
+

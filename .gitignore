@@ -5,6 +5,7 @@
 __pycache__
 coupark/__pycache__
 couparking/__pycache__
+coupark/management/commands/seed.py
 db.sqlite3
 media
 

@@ -5,16 +5,6 @@ from django.core.exceptions import ValidationError
 from datetime import datetime
 # Create your models here.
 
-class UserProfileInfo( models.Model ):
-
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-    #  Additional classes
-    profile_pic = models.ImageField( upload_to='profile_pics', blank = True )
-
-    def __str__(self):
-        return self.user.username
-
 def validate_ParkingSpace_vehicle_type(value):
     if not (value == 'Car' or value == 'Motorbike'):
         raise value.ValidationError("Vehicle Type not allowed")

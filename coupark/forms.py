@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.auth.models import User
-from coupark.models import UserProfileInfo
 import re
 
 def company_mail(email):
@@ -19,8 +18,3 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password']
 
-class UserProfileInfoForm(forms.ModelForm):
-
-    class Meta():
-        model = UserProfileInfo
-        fields = ('profile_pic',)

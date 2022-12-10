@@ -62,8 +62,8 @@ def add_spots():
             vehicleType = spot['vehicle']
         )
 
-    parkingSpot.save()
-    logger.info("Spot created")
+        parkingSpot.save()
+        logger.info(f"Spot { spot['name'] } created")
 
 def run_seed(self, mode):
     """ Seed database based on mode

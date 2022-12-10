@@ -56,13 +56,13 @@ def add_spots():
     for spot in spots:
         
         parkingSpot = ParkingSpace(
-            name = spot.name,
-            description = spot.description,
-            active = spot.active,
-            vehicleType = spot.vehicle
+            name = spot['name'],
+            description = spot['description'],
+            active = spot['active'],
+            vehicleType = spot['vehicle']
         )
 
-    spot.save()
+    parkingSpot.save()
     logger.info("Spot created")
 
 def run_seed(self, mode):

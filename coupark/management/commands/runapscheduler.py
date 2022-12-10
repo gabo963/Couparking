@@ -19,18 +19,23 @@ logger = logging.getLogger(__name__)
 
 
 def NewDay():
-    #Gets list of parking spaces.
-    parkingLots = ParkingSpace.objects.all()
+
     nextDate = datetime.today() + timedelta(days=1)
 
-    Date.objects.update_or_create( date = nextDate, defaults={'date':nextDate} )
+    if Date.objects.last().date != nextDate:
 
-    dbDate = Date.objects.get(date = nextDate)
+      parkingLots = ParkingSpace.objects.all()
 
-    for parkingLot in parkingLots:
-        if parkingLot.active:
-            # Update or create new item to Parking reservation
-            ParkingReservation.objects.update_or_create( date = dbDate, parkingSpace = parkingLot, defaults={'user':None, 'date':dbDate, 'parkingSpace':parkingLot})
+      Date.objects.update_or_create( date = nextDate, defaults={'date':nextDate} )
+
+      dbDate = Date.objects.get(date = nextDate)
+
+      for parkingLot in parkingLots:
+          if parkingLot.active:
+              # Update or create new item to Parking reservation
+              ParkingReservation.objects.update_or_create( date = dbDate, parkingSpace = parkingLot, defaults={'user':None, 'date':dbDate, 'parkingSpace':parkingLot})
+    else:
+      logger.info("Backup ")
 
 
 # The `close_old_connections` decorator ensures that database connections, that have become
@@ -64,6 +69,15 @@ class Command(BaseCommand):
       replace_existing=True,
     )
     logger.info("Added job 'NewDay'.")
+
+    scheduler.add_job(
+      NewDay,
+      trigger=CronTrigger(day_of_week="mon-sun", hour="18", minute="5"),
+      id="NewDayBackup",  # The `id` assigned to each job MUST be unique
+      max_instances=1,
+      replace_existing=True,
+    )
+    logger.info("Added job 'NewDayBackup'.")
 
     scheduler.add_job(
       delete_old_job_executions,

@@ -12,6 +12,8 @@
         <h1>Thank you for registering!</h1>
       {% else %}
         <h1>Register Here!</h1>
+
+        <p>Please use your personal email.</p>
         <form enctype="multipart/form-data" method="POST" >
 
           {% csrf_token %}

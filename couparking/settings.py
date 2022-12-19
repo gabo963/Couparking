@@ -16,7 +16,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = BASE_DIR / 'templates'
 STATIC_DIR = BASE_DIR / 'static'
-STATIC_DIR = BASE_DIR / 'static'
+STATIC_ROOT = '/home/couparking/Couparking/couparking/assets/'
 MEDIA_DIR = BASE_DIR / 'media'
 
 
@@ -24,12 +24,12 @@ MEDIA_DIR = BASE_DIR / 'media'
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-jyv3%#s#s^!$&tiy=fi2y)y)39-vhav#$e^m$^l)e7*x)@gg4l"
+SECRET_KEY = "gjih!5jue%tho+bq-j&uq8t29d99#xc1_e73ls8)ank!onmq00"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['couparking.pythonanywhere.com']
 
 
 # Application definition

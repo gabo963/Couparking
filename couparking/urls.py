@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from coupark import views
 
 urlpatterns = [
@@ -23,5 +25,6 @@ urlpatterns = [
     path('coupark/', include('coupark.urls')),
     path('logout/', views.user_logout, name='logout'),
     path('reservations/', views.reservations, name='reservations'),
-    path('book/<pk>', views.reserve, name='reserve')
-]
+    path('book/<pk>', views.reserve, name='reserve'),
+    path()
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

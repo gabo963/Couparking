@@ -29,8 +29,8 @@ def NewDay():
 
     nextDate = datetime.today() + timedelta(days=1)
 
-    logger.info('Next date: ' + nextDate)
-    logger.info('DB Date: ' + Date.objects.last().date)
+    logger.info('Next date: ' + str(nextDate))
+    logger.info('DB Date: ' + str(Date.objects.last().date))
 
     if Date.objects.last().date != nextDate:
 

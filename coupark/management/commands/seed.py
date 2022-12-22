@@ -31,13 +31,13 @@ def clear_data():
 
 
 spots = [ 
-{'name': "Spot: 15", 'description': "Big Spot - S3", 'active': True, 'vehicle': "Car"},
+{'name': "Spot: 15", 'description': "Big Spot - S3 (In front of 16)", 'active': True, 'vehicle': "Car"},
 {'name': "Spot: 16", 'description': "Big Spot - S3 (Behind 15)", 'active': True, 'vehicle': "Car"},
-{'name': "Spot: 43", 'description': "S3", 'active': True, 'vehicle': "Car"},
+{'name': "Spot: 43", 'description': "S3 (In front of 44)", 'active': True, 'vehicle': "Car"},
 {'name': "Spot: 44", 'description': "S3 (Behind 43)", 'active': True, 'vehicle': "Car"},
-{'name': "Spot: 46", 'description': "S3", 'active': True, 'vehicle': "Car"},
+{'name': "Spot: 46", 'description': "S3 (In front of 47)", 'active': True, 'vehicle': "Car"},
 {'name': "Spot: 47", 'description': "S3 (Behind 46)", 'active': True, 'vehicle': "Car"},
-{'name': "Spot: 49", 'description': "S3", 'active': True, 'vehicle': "Car"},
+{'name': "Spot: 49", 'description': "S3 (In front of 50)", 'active': True, 'vehicle': "Car"},
 {'name': "Spot: 50", 'description': "S3 (Behind 49)", 'active': True, 'vehicle': "Car"},
 {'name': "Spot: 52-1", 'description': "S3", 'active': True, 'vehicle': "Motorbike"},
 {'name': "Spot: 52-2", 'description': "S3", 'active': True, 'vehicle': "Motorbike"},

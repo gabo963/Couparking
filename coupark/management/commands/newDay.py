@@ -33,14 +33,13 @@ def NewDay():
 
         parkingLots = ParkingSpace.objects.all()
 
-        Date.objects.update_or_create( date = nextDate, defaults={'date':nextDate} )
-
-        dbDate = Date.objects.get(date = nextDate)
+        newDate = Date(date=nextDate)
+        newDate.save()
 
         for parkingLot in parkingLots:
             if parkingLot.active:
                 # Update or create new item to Parking reservation
-                ParkingReservation.objects.update_or_create( date = dbDate, parkingSpace = parkingLot, defaults={'user':None, 'date':dbDate, 'parkingSpace':parkingLot})
+                ParkingReservation.objects.update_or_create( date = newDate, parkingSpace = parkingLot, defaults={'user':None, 'date':newDate, 'parkingSpace':parkingLot})
         
         logger.info("Next Day created")
 

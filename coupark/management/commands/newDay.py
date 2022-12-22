@@ -55,6 +55,6 @@ def run_newDay(self, mode):
     :param mode: refresh 
     :return:
     """
-    newDay()
+    NewDay()
 
 

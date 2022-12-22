@@ -25,9 +25,11 @@ MEDIA_DIR = BASE_DIR / 'media'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "gjih!5jue%tho+bq-j&uq8t29d99#xc1_e73ls8)ank!onmq00"
+# Secret key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# Debug off
 
 #'couparking.pythonanywhere.com'
 ALLOWED_HOSTS = []

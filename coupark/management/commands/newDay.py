@@ -55,10 +55,6 @@ def run_newDay(self, mode):
     :param mode: refresh 
     :return:
     """
-
-    if mode == 'refresh':
-            
-        # Adds a newDay of reservation entries
-        newDay()
+    newDay()
 
 

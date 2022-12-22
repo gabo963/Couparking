@@ -78,7 +78,7 @@ def run_seed(self, mode):
     add_spots()
 
     #Adds date
-    nextDate = datetime.today() + timedelta(days=1)
+    nextDate = datetime.today()
     Date.objects.update_or_create( date = nextDate, defaults={'date':nextDate} )
     dbDate = Date.objects.get(date = nextDate)
 

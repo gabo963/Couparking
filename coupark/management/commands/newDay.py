@@ -48,10 +48,10 @@ def NewDay():
 
 def run_newDay(self, mode):
     """ Create a NewDay database
-
-    :param mode: refresh 
+    :param mode: refresh
     :return:
     """
-    NewDay()
+    if( mode == 'refresh' ):
+        NewDay()
 
 

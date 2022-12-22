@@ -29,6 +29,9 @@ def NewDay():
 
     nextDate = datetime.today() + timedelta(days=1)
 
+    logger.print('Next date: ' + nextDate)
+    logger.print('DB Date: ' + Date.objects.last().date)
+
     if Date.objects.last().date != nextDate:
 
         parkingLots = ParkingSpace.objects.all()

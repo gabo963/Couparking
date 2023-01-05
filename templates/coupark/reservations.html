@@ -13,21 +13,23 @@
 {% if currentUserReservations %}
 
 <div class="container">
-  <div class="list-group">
-    {% for reservation in currentUserReservations %}
+  <ul class="list-group">
+    
+    <li class="list-group-item active" aria-current="true">
+      <h5>Previous Reservations:</h5>
+    </li>
 
-      <a href="" class="list-group-item list-group-item-action" aria-current="true"> 
+    {% for reservation in currentUserReservations %}
+      <li class="list-group-item">
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{{reservation.parkingSpace.name}}</h5>
-          <small>{{reservation.date.date}}</small>
+        <h5 class="mb-1">{{reservation.parkingSpace.name}}</h5>
+        <small>{{reservation.date.date}}</small>
         </div>
         <p class="mb-1">{{reservation.parkingSpace.description}}</p>
         <small>{{reservation.parkingSpace.vehicleType}}</small>
-      </a>
-
+      </li>
     {% endfor %}
-    
-  </div>
+  </ul>
 </div>
 
 {% else %}

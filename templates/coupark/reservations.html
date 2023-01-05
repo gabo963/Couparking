@@ -12,24 +12,26 @@
 
 {% if currentUserReservations %}
 
-<div class="container">
-  <ul class="list-group">
-    
-    <li class="list-group-item active" aria-current="true">
-      <h5>Previous Reservations:</h5>
-    </li>
-
-    {% for reservation in currentUserReservations %}
-      <li class="list-group-item">
-        <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">{{reservation.parkingSpace.name}}</h5>
-        <small>{{reservation.date.date}}</small>
-        </div>
-        <p class="mb-1">{{reservation.parkingSpace.description}}</p>
-        <small>{{reservation.parkingSpace.vehicleType}}</small>
+<div class="overflow-auto">
+  <div class="container">
+    <ul class="list-group">
+      
+      <li class="list-group-item active" aria-current="true">
+        <h5>Previous Reservations:</h5>
       </li>
-    {% endfor %}
-  </ul>
+
+      {% for reservation in currentUserReservations %}
+        <li class="list-group-item">
+          <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{reservation.parkingSpace.name}}</h5>
+          <small>{{reservation.date.date}}</small>
+          </div>
+          <p class="mb-1">{{reservation.parkingSpace.description}}</p>
+          <small>{{reservation.parkingSpace.vehicleType}}</small>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 </div>
 
 {% else %}
